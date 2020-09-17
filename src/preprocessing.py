@@ -34,9 +34,11 @@ def angrGraphGen(filepath1, filepath2):
     prog2 = angr.Project(filepath2, load_options={'auto_load_libs': False})
 
     print("Analyzing the binaries to generate CFGs...")
+    # Modified by Hongwei
     cfg1 = prog1.analyses.CFGFast()
     cg1 = cfg1.functions.callgraph
     print("First binary done")
+    # Modified by Hongwei
     cfg2 = prog2.analyses.CFGFast()
     cg2 = cfg2.functions.callgraph
     print("CFGs Generated!")

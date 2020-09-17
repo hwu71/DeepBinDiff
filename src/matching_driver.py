@@ -32,7 +32,7 @@ else:
 EBD_CALL_GRAPH = False 
 
 
-def pre_matching(bin1_name, bin2_name, toBeMergedBlocks={}):
+def pre_matching(bin1_name, bin2_name, outputDir, toBeMergedBlocks={}):
     # if sys.platform != "win32":
 
 
@@ -41,9 +41,10 @@ def pre_matching(bin1_name, bin2_name, toBeMergedBlocks={}):
     
     ebd_dic, _ = utility.ebd_file_to_dic(embedding_file)
 
-    node_in_bin1, _node_in_bin2 = utility.readNodeInfo(node2addr_file)
+    node_in_bin1, _node_in_bin2, bb_list = utility.readNodeInfo(node2addr_file)
+    #print (type(bb_list))
     
-    
+        
     bin1_mat = []
     bin2_mat = []
     node_map = {}
@@ -65,6 +66,33 @@ def pre_matching(bin1_name, bin2_name, toBeMergedBlocks={}):
 
     print("matched pairs: ")
     print(matched_pairs)
+    
+    print("Convert index to addr ...")
+    # Hongwei: convert index to addr 
+    index_to_addr_dic = {}
+    for bb_info in bb_list:
+        bb_index = bb_info[0]
+        bb_start_addr = hex(int(bb_info[1],16))
+        index_to_addr_dic[bb_index] = bb_start_addr 
+        
+    matched_pairs_with_addr = []
+    for pair in matched_pairs:
+        addr1 = index_to_addr_dic[pair[0]]
+        addr2 = index_to_addr_dic[pair[1]]
+        matched_pairs_with_addr.append([addr1,addr2])
+    
+    print("Writing result: matched pairs with addr ...")    
+    with open(outputDir + 'matched_pairs_with_addr', 'w') as f:  
+        for pair in matched_pairs_with_addr:
+            print(pair[0],pair[1],file=f)
+            
+    #print("matched pairs with address:")
+    #print(matched_pairs_with_addr)
+    return matched_pairs_with_addr
+    
+    #print("matched paris in address: ")
+    #for pair in matched_pairs:
+    #    addr_1 = 
 
     # print("Inserted blocks: ")
     # print(inserted)

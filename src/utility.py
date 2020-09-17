@@ -148,7 +148,7 @@ def readNodeInfo(node2addr_file):
                 bb_list.append(bb_addr_vec)
                 bb_op_list.append(bb_op_vec)
     
-    return node_in_bin1, node_in_bin2
+    return node_in_bin1, node_in_bin2, bb_list
 
 
 # This function matches functions and further matches basic blocks inside function pairs

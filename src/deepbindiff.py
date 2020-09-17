@@ -15,6 +15,8 @@ from deepwalk import deepwalk
 import tensorflow as tf
 import numpy as np
 
+# Hongwei: add module
+import matched_pairs_analyzer
 
 # this list contains all the indices of the opcode in opcode_list
 opcode_idx_list = []
@@ -223,7 +225,10 @@ def main():
     copyEverythingOver(outputDir, 'data/DeepBD/')
 
     # step 7: TADW for block embedding generation & block matching
-    matching_driver.pre_matching(bin1_name, bin2_name, toBeMergedBlocks)
+    matched_pairs_with_addr = matching_driver.pre_matching(bin1_name, bin2_name, outputDir, toBeMergedBlocks)
+    
+    # Hongwei: step 8: Categorize the matched pair according to functions
+    matched_pairs_analyzer.analyzer(filepath1, filepath2, outputDir, matched_pairs_with_addr)
 
 
 if __name__ == "__main__":

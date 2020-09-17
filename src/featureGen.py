@@ -21,7 +21,8 @@ num_skips = 2         # How many times to reuse an input to generate a label.
 valid_size = 16     # Random set of words to evaluate similarity on.
 valid_window = 100  # Only pick dev samples in the head of the distribution.
 valid_examples = np.random.choice(valid_window, valid_size, replace=False)
-num_sampled = 64    # Number of negative examples to sample.
+# Updated by Hongwei from 64 to 16
+num_sampled = 16    # Number of negative examples to sample.
 
 #num_steps = 100001
 prev_data_index = 0
