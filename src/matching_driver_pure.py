@@ -2,7 +2,7 @@ import sys
 import os
 import numpy as np
 # from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-import utility
+import utility_pure
 import time
 
 import preprocessing
@@ -39,9 +39,9 @@ def pre_matching(bin1_name, bin2_name, outputDir, toBeMergedBlocks={}):
     tadw_command = "python3 ./src/performTADW.py --method tadw --input " + bin_edgelist_file + " --graph-format edgelist --feature-file " + bin_features_file + " --output vec_all"
     os.system(tadw_command)
     
-    ebd_dic, _ = utility.ebd_file_to_dic(embedding_file)
+    ebd_dic, _ = utility_pure.ebd_file_to_dic(embedding_file)
 
-    node_in_bin1, _node_in_bin2, bb_list = utility.readNodeInfo(node2addr_file)
+    node_in_bin1, _node_in_bin2, bb_list = utility_pure.readNodeInfo(node2addr_file)
     #print (type(bb_list))
     
         
@@ -59,12 +59,12 @@ def pre_matching(bin1_name, bin2_name, outputDir, toBeMergedBlocks={}):
 
     bin1_mat = np.array(bin1_mat)
     bin2_mat = np.array(bin2_mat)
-    sim_result = utility.similarity_gpu(bin1_mat, bin2_mat)
+    sim_result = utility_pure.similarity_gpu(bin1_mat, bin2_mat)
     
     
     print("Perform matching...")
     t1 = time.time()
-    matched_pairs, inserted, deleted = utility.matching(node_in_bin1, ebd_dic, sim_result, node_map, toBeMergedBlocks)
+    matched_pairs = utility_pure.matching(node_in_bin1, ebd_dic, sim_result, node_map, toBeMergedBlocks)
     t2 = time.time()
     print("Matching time: ", t2 - t1)
 

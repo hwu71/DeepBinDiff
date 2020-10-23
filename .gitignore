@@ -1,3 +1,10 @@
 output/
 data/
 run.txt
+*.dot
+*.png
+src/__pycache__/*
+src/deepwalk/__pycache__/*
+src/libnrl/gcn/__pycache__/*
+src/libnrl/__pycache__/*
+*.gpickle

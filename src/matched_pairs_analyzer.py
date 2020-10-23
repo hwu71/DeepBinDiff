@@ -20,7 +20,7 @@ def analyzer(binary_path_1, binary_path_2, outputDir, matched_pairs_with_addr):
     b1_functions = b1_cfg.kb.functions
     b2_functions = b2_cfg.kb.functions
     
-    print("Convert addr to function_addr ...")
+    print("Converting addr to function_addr ...")
     
     # Initilization for b1
     for b1_function in b1_functions:
@@ -47,14 +47,22 @@ def analyzer(binary_path_1, binary_path_2, outputDir, matched_pairs_with_addr):
             func_addr_2 = node2.function_address
             
             # Append to the pair list
-            b1_matched_pairs_in_function_dic[func_addr_1].append([hex(bb_addr_1), hex(bb_addr_2)])
-            b2_matched_pairs_in_function_dic[func_addr_2].append([hex(bb_addr_1), hex(bb_addr_2)])
+            if func_addr_1 in b1_matched_pairs_in_function_dic and func_addr_2 in b2_matched_pairs_in_function_dic:
+                #b1_matched_pairs_in_function_dic[func_addr_1] = []
+                b1_matched_pairs_in_function_dic[func_addr_1].append([hex(bb_addr_1), hex(bb_addr_2)])
+            #if func_addr_2 in b2_matched_pairs_in_function_dic:
+                #b2_matched_pairs_in_function_dic[func_addr_2] = []
+                b2_matched_pairs_in_function_dic[func_addr_2].append([hex(bb_addr_1), hex(bb_addr_2)])
             
             # Add to the b1_matched_blocks_in_function_dic set
-            b1_matched_blocks_in_function_dic[func_addr_1].add(hex(bb_addr_1))
+            #if func_addr_1 in b1_matched_blocks_in_function_dic:
+                #b1_matched_blocks_in_function_dic[func_addr_1] = set()
+                b1_matched_blocks_in_function_dic[func_addr_1].add(hex(bb_addr_1))
             
             # Add to the b2_matched_blocks_in_function_dic set
-            b2_matched_blocks_in_function_dic[func_addr_2].add(hex(bb_addr_2))
+            #if func_addr_2 in b2_matched_blocks_in_function_dic:
+                #b2_matched_blocks_in_function_dic[func_addr_2] = set()
+                b2_matched_blocks_in_function_dic[func_addr_2].add(hex(bb_addr_2))
             
     print("Writing result of function_addr ...")
     # Print out the b1 result
